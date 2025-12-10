@@ -1,9 +1,9 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
-from pages.landing_option_dash import landing_page
-from pages.pricer_option_dash import pricer_page
-from pages.graph_option_dash import graph_page
+# from pages.landing_option_dash import landing_page
+# from pages.pricer_option_dash import pricer_page
+# from pages.graph_option_dash import graph_page
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True
@@ -30,9 +30,9 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("Option Dash", className="display-4"),
+        html.H2("SABR Webapp", className="display-4"),
         html.Hr(),
-        html.P("A dashboard provides intelligence", className="lead"),
+        html.P("A Webapp provides SABR intelligence", className="lead"),
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
@@ -55,11 +55,11 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return landing_page
+        return "This is home page"
     elif pathname == "/pricer":
-        return pricer_page
+        return "This is pricer page"
     elif pathname == "/graphs":
-        return graph_page
+        return "This is graphs page"
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
@@ -72,4 +72,4 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5050)
+    app.run(debug=True, port=8050)
