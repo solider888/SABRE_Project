@@ -1,8 +1,10 @@
 import dash
 import dash_bootstrap_components as dbc
+import dash_mantine_components as dmc
 from dash import Input, Output, dcc, html
+
 from pages.landing import landing_page
-from pages.smile import smile_page
+from pages.smile import smile_page_layout 
 from pages.surface import surface_page
 
 
@@ -13,7 +15,7 @@ app = dash.Dash(
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
     "position": "fixed",
-    "top": 0,
+    "top": 0, 
     "left": 0,
     "bottom": 0,
     "width": "16rem",
@@ -50,14 +52,18 @@ sidebar = html.Div(
 
 content = html.Div(id="page-content", style=CONTENT_STYLE)
 
-app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+app.layout = dmc.MantineProvider(
+    children=html.Div([dcc.Location(id="url"), sidebar, content])
+)
+
+
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
         return landing_page
     elif pathname == "/smile":
-        return smile_page
+        return smile_page_layout
     elif pathname == "/surface":
         return surface_page
     # If the user tries to reach a different page, return a 404 message
